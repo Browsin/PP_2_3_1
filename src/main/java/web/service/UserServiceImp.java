@@ -19,11 +19,11 @@ public class UserServiceImp implements UserService {
       return userDao.getAllUsers();
    }
 
-   @Transactional
+   @Transactional//todo: ..идет с предыдущей задачи
    @Override
    public User findById(int id) {
       return userDao.findById(id);
-   }
+   }//todo: int id ..идет с предыдущей задачи
 
    @Transactional
    @Override

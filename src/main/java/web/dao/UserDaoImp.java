@@ -14,8 +14,7 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public List<User> getAllUsers() {
-      return entityManager.createQuery("SELECT u FROM User u", User.class)
-              .getResultList();
+      return entityManager.createQuery("SELECT u FROM User u", User.class).getResultList();//todo: codeStyle
    }
 
    @Override
@@ -25,6 +24,15 @@ public class UserDaoImp implements UserDao {
 
    @Override
    public void createOrUpdateUser(User user) {
+      userformCheck(user);
+      if (user.getId() == null) {
+         entityManager.persist(user);
+      } else {
+         entityManager.merge(user);
+      }
+   }
+
+   private void userformCheck(User user) {//todo: не требовалось по тех.заданию (на проектах свобода мысли.. не всегда приветствуется)
       if (user.getFirstName() == "") {
          user.setFirstName("Default Name " +user.getId());
       }
@@ -33,11 +41,6 @@ public class UserDaoImp implements UserDao {
       }
       if (user.getEmail() == "") {
          user.setEmail("n/a email");
-      }
-      if (user.getId() == null) {
-         entityManager.persist(user);
-      } else {
-         entityManager.merge(user);
       }
    }
 
